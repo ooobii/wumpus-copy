@@ -1,0 +1,12 @@
+{
+    "personalToken": "personalUserToken",
+    "sourceChannels": {
+        "sourceGuildId": ["channelid", "oneUserId"],
+        "sourceGuildId2": ["channelid2", "orMultiple", "userIds"]
+    },
+    "destinationChannels": {
+        "destGuildId": ["channelid", "all"],
+        "destGuildId2": ["channelid2", "oneSourceGuildID"],
+        "destGuildId3": ["channelid3", "orMultiple", "sourceGuildIDs"]
+    }
+}
