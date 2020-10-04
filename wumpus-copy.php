@@ -1,10 +1,9 @@
 <?php
 #load packages
-include __DIR__.'/vendor/autoload.php';
+include __DIR__ . '/vendor/autoload.php';
 
 #load helper methods
-require __DIR__.'/lib/config_manager.php'; //config_manager
-
+require __DIR__ . '/lib/config_manager.php'; //config_manager
 
 // START =================================
 // load config from json
@@ -17,17 +16,11 @@ $destHistories = array();
 // Connect to Discord API
 $discord = new \Discord\Discord([
     'token' => $config->get_token(),
-    'logging' => FALSE
+    'logging' => false,
 ]);
 
-$discord->on('ready', function($discord) use ($config) {
-    
+$discord->on('ready', function ($discord) use ($config) {
+
 });
 
 $discord->run();
-
-
-
-
-
-

@@ -1,12 +1,18 @@
 <?php
-function say($msg, $nl = 1) {
-    $printDate = TRUE;
+function say($msg, $nl = 1)
+{
+    $printDate = true;
 
-    if($msg == "OK!") $printDate = FALSE;
+    if ($msg == "OK!") {
+        $printDate = false;
+    }
 
-    if($printDate) echo "[".Date("Y-m-d H:i:s")."] ";
+    if ($printDate) {
+        echo "[" . Date("Y-m-d H:i:s") . "] ";
+    }
+
     echo $msg;
-    for($i = 0; $i < $nl; $i++) {
+    for ($i = 0; $i < $nl; $i++) {
         echo "\n";
     }
 
