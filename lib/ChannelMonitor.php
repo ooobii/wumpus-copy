@@ -18,7 +18,17 @@ class ChannelMonitor extends ChannelConnection
         parent::__construct(true, $channelId);
     }
 
-    public function process_message(config_manager $config, Message $message) {
+    public function get_connected_destinations(config_manager $config) {
+        return array_filter($config->get_destinations(), function($item, $key) {
+            if($item->ConnectedMonitorNickname == $this->Nickname) return true;
+
+            return false;
+        }, ARRAY_FILTER_USE_BOTH);
+    }
+
+    public function get_connected_destination_ids(config_manager $config) {
+        return array_column($this->get_connected_destinations($config), "ChannelID");
+    }
         
     }
 
