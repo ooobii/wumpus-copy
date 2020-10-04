@@ -61,7 +61,7 @@ class config_manager
         return $this->DiscordToken;
     }
 
-    #TODO: add fetches for source channel monitors
+
     public function get_monitors() {
         return $this->SourceMonitors;
     }
@@ -70,6 +70,11 @@ class config_manager
     }
 
 
-    #TODO: add fetches for destination connections
+    public function get_destinations() {
+        return $this->DestinationConnections;
+    }
+    public function get_destination($destinationNickname) {
+        return $this->DestinationConnections[$destinationNickname];
+    }
 
 }
