@@ -16,18 +16,19 @@ $config = new config_manager('config.json');
 #connect to Discord API
 $discord = new \Discord\Discord([
     'token' => $config->get_token(),
-    'logging' => false,
+    'logging' => FALSE
 ]);
+
 
 #prep handling for when Discord has authenticated through REST API.
 $discord->on('ready', function ($discord) use ($config) {
 
     #prep handling for when a  message is received on a channel this account is a member of.
-    $discord->on('message', function ($message) use ($config) {
-
+    $discord->on('message', function ($message) use ($config, $discord) {
+        
         #loop through monitors and, if eligible, process the connected destinations.
         foreach($config->get_monitors() as $monitor) {
-            $monitor->process_message($config, $message);
+            $monitor->process_message($config, $discord, $message);
         }
 
     });

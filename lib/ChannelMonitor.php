@@ -1,4 +1,5 @@
 <?php
+use Discord\Discord;
 use Discord\Parts\Channel\Message;
 class ChannelMonitor extends ChannelConnection
 {
@@ -7,8 +8,8 @@ class ChannelMonitor extends ChannelConnection
      * Create a channel connection to listen in on for messages form a specific user..
      *
      * @param string $nickname A friendly name of the channel to monitor
-     * @param float $guildId The Discord GuildID that the channel to listen in on belongs to.
-     * @param float $channelId The Discord ChannelID to listen in on.
+     * @param string $guildId The Discord GuildID that the channel to listen in on belongs to.
+     * @param string $channelId The Discord ChannelID to listen in on.
      * @param float $fromId The Discord UserID to trigger messages from.
      */
     public function __construct($channelId, $fromId, $nickname)
@@ -29,6 +30,21 @@ class ChannelMonitor extends ChannelConnection
     public function get_connected_destination_ids(config_manager $config) {
         return array_column($this->get_connected_destinations($config), "ChannelID");
     }
+
+
+    public function process_message(config_manager $config, Discord $discord, Message $message) {
+
+        #check to see if message ID is part of the monitored channel, and is from the monitored ID (if any).
+        if($this->get_channel_id() == $message->channel_id) {
+
+            #when part of monitored channel, process message forwarding to each connected destination.
+            foreach($this->get_connected_destinations($config) as $destination) {
+
+                $destination->process_message($config, $discord, $message);
+
+            }
+
+        }
         
     }
 

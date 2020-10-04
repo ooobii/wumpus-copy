@@ -1,4 +1,7 @@
 <?php
+use Discord\Discord;
+use Discord\Parts\Channel\Message;
+use Discord\Parts\GuildRepository;
 require_once __DIR__ . "/ChannelMonitor.php";
 
 class DestinationChannel extends ChannelConnection
@@ -18,9 +21,28 @@ class DestinationChannel extends ChannelConnection
         parent::__construct(false, $channelId);
     }
 
-    public function get_connected_monitor(config_manager $config) 
+    public function get_connected_monitor(config_manager $config) : ChannelMonitor
     {
         return $config->SourceMonitors[$this->ConnectedMonitorNickname];
+    }
+
+
+    public function process_message(config_manager $config, Discord $discord, Message $message) { 
+        $parentMonitor = $this->get_connected_monitor($config);
+
+        #abort if ChannelID of message is not the ChannelID of the monitor.
+        if($message->channel_id != $parentMonitor->get_channel_id()) return;
+
+        #go through each guild the user is a part of
+        foreach ($discord->guilds as $guild) {
+                if (in_array($this->get_channel_id(), array_column(json_decode(json_encode($guild->channels), true), 'id'))) {
+
+                    var_dump($guild->channels->get('id', $this->get_channel_id()));
+                    return;
+                    
+                }
+            
+        }
     }
 
 }

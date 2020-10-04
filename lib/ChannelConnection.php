@@ -9,8 +9,8 @@ class ChannelConnection
     }
 
 
-    public function get_channelid() {
-        return $this->ChannelId;
+    public function get_channel_id() {
+        return $this->ChannelID;
     }
 
 }
