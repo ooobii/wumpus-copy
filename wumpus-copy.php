@@ -25,10 +25,15 @@ $discord->on('ready', function ($discord) use ($config) {
 
     #prep handling for when a  message is received on a channel this account is a member of.
     $discord->on('message', function ($message) use ($config, $discord) {
-        
-        #loop through monitors and, if eligible, process the connected destinations.
-        foreach($config->get_monitors() as $monitor) {
-            $monitor->process_message($config, $discord, $message);
+
+        #check to see if the bot is not the author, and if the message occurred in a monitored channel
+        if($message->author->id != $discord->id && in_array($message->channel_id, $config->get_monitored_channels() ) ) {   
+            
+            #let qualified monitors handle the message
+            $monitors = $config->get_monitors_for_channel($message->channel_id);
+            foreach($monitors as $monitor) {
+                $monitor->process_message($config, $discord, $message);                
+            }
         }
 
     });

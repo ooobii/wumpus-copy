@@ -12,11 +12,16 @@ class ChannelMonitor extends ChannelConnection
      * @param string $channelId The Discord ChannelID to listen in on.
      * @param float $fromId The Discord UserID to trigger messages from.
      */
-    public function __construct($channelId, $fromId, $nickname)
+    public function __construct($guildId, $channelId, $fromId, $nickname)
     {
         $this->UserId = $fromId;
-        $this->Nickname = $nickname;
-        parent::__construct(true, $channelId);
+        parent::__construct(true, $guildId, $channelId, $nickname);
+    }
+    public function get_user() {
+        return $this->UserId;
+    }
+    public function get_nickname() {
+        return $this->Nickname;
     }
 
     public function get_connected_destinations(config_manager $config) {
@@ -35,12 +40,13 @@ class ChannelMonitor extends ChannelConnection
     public function process_message(config_manager $config, Discord $discord, Message $message) {
 
         #check to see if message ID is part of the monitored channel, and is from the monitored ID (if any).
-        if($this->get_channel_id() == $message->channel_id) {
+        if($this->get_channel_id() == $message->channel_id && ($this->UserId == "" ? TRUE : $this->UserId == $message->author->id)) {
+            echo " Found Qualified Monitor... ";
 
             #when part of monitored channel, process message forwarding to each connected destination.
             foreach($this->get_connected_destinations($config) as $destination) {
 
-                $destination->process_message($config, $discord, $message);
+                $destination->send_message($config, $discord, $message);
 
             }
 
