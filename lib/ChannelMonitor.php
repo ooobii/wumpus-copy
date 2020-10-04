@@ -11,10 +11,10 @@ class ChannelMonitor extends ChannelConnection
      * @param float $channelId The Discord ChannelID to listen in on.
      * @param float $fromId The Discord UserID to trigger messages from.
      */
-    public function __construct($guildId, $channelId, $fromId)
+    public function __construct($channelId, $fromId)
     {
         $this->UserId = $fromId;
-        parent::__construct(true, $guildId, $channelId);
+        parent::__construct(true, $channelId);
     }
 
     public function process_message(config_manager $config, Message $message) {

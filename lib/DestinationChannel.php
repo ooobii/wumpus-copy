@@ -18,4 +18,9 @@ class DestinationChannel extends ChannelConnection
         parent::__construct(false, $guildId, $channelId);
     }
 
+    public function get_connected_monitor(config_manager $config) 
+    {
+        return $config->SourceMonitors[$this->ConnectedMonitorNickname];
+    }
+
 }

@@ -4,14 +4,12 @@
     },
     "monitors": {
         "enterCustomListenServerNameHere": {
-            "guildID": "",
             "channelIDs": ["", ""],
             "fromUserIDs": ["", ""]
         }
     },
     "destinations": {
         "enterCustomDestinationServerNameHere": {
-            "guildID": "",
             "channelIDs": ["", ""],
             "fromSource": ["", ""]
         }
