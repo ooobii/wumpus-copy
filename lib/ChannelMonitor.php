@@ -1,4 +1,5 @@
 <?php
+use Discord\Parts\Channel\Message;
 class ChannelMonitor extends ChannelConnection
 {
 
@@ -14,6 +15,10 @@ class ChannelMonitor extends ChannelConnection
     {
         $this->UserId = $fromId;
         parent::__construct(true, $guildId, $channelId);
+    }
+
+    public function process_message(config_manager $config, Message $message) {
+        
     }
 
 }
