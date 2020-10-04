@@ -62,6 +62,14 @@ class config_manager
     }
 
     #TODO: add fetches for source channel monitors
+    public function get_monitors() {
+        return $this->SourceMonitors;
+    }
+    public function get_monitor($monitorNickname) {
+        return $this->SourceMonitors[$monitorNickname];
+    }
+
+
     #TODO: add fetches for destination connections
 
 }
