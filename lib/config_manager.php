@@ -10,7 +10,11 @@ class config_manager
 
         #fetch token from JSON data
         if(!$rawJSON['properties']['botToken']) throw new Exception("Invalid configuration; missing 'properties/botToken' value.");
-        $this->DiscordToken = $rawJSON['properties']['botToken'];
+        $this->BotToken = $rawJSON['properties']['botToken'];
+
+        #fetch individual from JSON data
+        if(!$rawJSON['properties']['individualToken']) throw new Exception("Invalid configuration; missing 'properties/individualToken' value.");
+        $this->IndividualToken = $rawJSON['properties']['individualToken'];
 
         #Create Source Monitors
         $this->SourceMonitors = array();
@@ -63,7 +67,10 @@ class config_manager
     }
 
     public function get_token() {
-        return $this->DiscordToken;
+        return $this->BotToken;
+    }
+    public function get_individual_token() {
+        return $this->IndividualToken;
     }
 
 
