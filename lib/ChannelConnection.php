@@ -2,8 +2,9 @@
 
 class ChannelConnection
 {
-    public function __construct($nickname, $isSource, $guildId, $channelId)
+    public function __construct($isSource, $guildId, $channelId)
     {
+
         if ($guildId) {
             $this->GuildId = $guildId;
         }
