@@ -12,10 +12,10 @@ class DestinationChannel extends ChannelConnection
      * @param float $channelId The Discord ChannelID to deposit messages into.
      * @param string $fromMonitor The ChannelMonitor nickname that will be handled by this connection.
      */
-    public function __construct($guildId, $channelId, $fromMonitor)
+    public function __construct($channelId, $fromMonitor)
     {
         $this->ConnectedMonitorNickname = $fromMonitor;
-        parent::__construct(false, $guildId, $channelId);
+        parent::__construct(false, $channelId);
     }
 
     public function get_connected_monitor(config_manager $config) 
