@@ -57,7 +57,10 @@ class config_manager
         }
     }
 
-    #TODO: add fetcher for token
+    public function get_token() {
+        return $this->DiscordToken;
+    }
+
     #TODO: add fetches for source channel monitors
     #TODO: add fetches for destination connections
 
