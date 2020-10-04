@@ -24,7 +24,7 @@ class config_manager
                 foreach($source['fromUserIDs'] as $userId) {
 
                     #create a monitor record, and add it to source monitors collection
-                    $monitor = new ChannelMonitor($sourceChanId, $userId);
+                    $monitor = new ChannelMonitor($sourceChanId, $userId, $sourceNickname);
                     $this->SourceMonitors[$sourceNickname] = $monitor;
 
                 }
@@ -47,7 +47,7 @@ class config_manager
                     if(!$this->SourceMonitors[$monitorNick]) throw new Exception("Invalid configuration; The monitor '$monitorNick' specified in destination '$destNickname' does not exist.");
 
                     #create a monitor record, and add it to source monitors collection
-                    $destination = new DestinationChannel($destChanId, $monitorNick);
+                    $destination = new DestinationChannel($destChanId, $monitorNick, $destNickname);
                     $this->DestinationConnections[$destNickname] = $destination;
 
                 }
