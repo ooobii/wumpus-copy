@@ -1,17 +1,22 @@
 {
     "properties": {
-        "personalToken": ""
+        "botToken": "",
+        "individualToken": "",
+        "queueInterval": 2
     },
     "monitors": {
-        "enterCustomListenServerNameHere": {
-            "channelIDs": ["", ""],
-            "fromUserIDs": ["", ""]
+        "sourceName1": {
+            "guildID": "",
+            "channelID": "",
+            "fromUserID": ""
         }
+        
     },
     "destinations": {
-        "enterCustomDestinationServerNameHere": {
-            "channelIDs": ["", ""],
-            "fromSource": ["", ""]
+        "oobi-dest-a": {
+            "guildID": "",
+            "channelIDs": [""],
+            "fromSource": ["sourceName1"]
         }
     }
 }
