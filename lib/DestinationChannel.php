@@ -25,7 +25,7 @@ class DestinationChannel extends ChannelConnection
     }
 
 
-    public function send_message(config_manager $config, array $discords, Message $message) : int {
+    public function send_message(config_manager $config, array $discord, Message $message) : int {
 
         #abort if ChannelID of message is not the ChannelID of the monitor.
         if($message->channel_id != $this->get_connected_monitor($config)->get_channel_id()) return 0;
@@ -33,7 +33,7 @@ class DestinationChannel extends ChannelConnection
         say("[Deposits (" . $this->get_nickname() . ")]: Processing qualified message...", 0);
 
         #get instance of the guild for this deposit connector
-        $guild = $discords['deposit']->guilds->get('id', $this->get_guild_id());
+        $guild = $discord->guilds->get('id', $this->get_guild_id());
         if(!is_null($guild)) {
 
             #if guild is found, get the channel for this deposit connector
