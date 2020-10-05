@@ -1,4 +1,5 @@
 <?php
+use Discord\Discord;
 use Discord\Parts\Channel\Message;
 require_once __DIR__ . "/ChannelMonitor.php";
 
@@ -25,12 +26,10 @@ class DestinationChannel extends ChannelConnection
     }
 
 
-    public function send_message(config_manager $config, array $discord, Message $message) : int {
+    public function send_message(config_manager $config, Discord $discord, Message $message) : int {
 
         #abort if ChannelID of message is not the ChannelID of the monitor.
         if($message->channel_id != $this->get_connected_monitor($config)->get_channel_id()) return 0;
-
-        say("[Deposits (" . $this->get_nickname() . ")]: Processing qualified message...", 0);
 
         #get instance of the guild for this deposit connector
         $guild = $discord->guilds->get('id', $this->get_guild_id());
