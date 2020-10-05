@@ -41,13 +41,18 @@ $depositDiscord = new Discord([
 #declare function for handling startup of the monitor instance.
 $monitorReadyHandler = function(Discord $discord) use($config) {
 
+    #declare handler for incoming messages on monitor instance
     $discord->on('message', function (Message $message) use ($config) {
+
         #check to see if author and channel are being monitored.
         if(in_array($message->channel_id, $config->get_monitored_channels())) {
-            say("[Monitor]: Found Message; adding to queue.");
+
             #add message to deposit queue
+            say("[Monitor]: Found Message; adding to queue.");
             $config->add_deposit_queue($message);
+
         }
+
     });
 
     say("Monitor Instance Ready!");
@@ -61,10 +66,13 @@ $depositReadyHandler = function(Discord $discord) use($config) {
 
 #add the queue processing periodic loop to the main loop.
 $mainLoop->addPeriodicTimer($config->get_queue_interval(), function() use ($config, $depositDiscord) {
+    #copy current instance of queue as to not disturb adding new messages during queue processing.
     $queue = $config->get_deposit_queue();
 
-    #if queue is not empty, pass messages in queue to depositors.
+    #if queue copy is not empty, pass messages to depositors.
     if(sizeof($queue) > 0) {
+        
+        #notify queue is populated.
         say("[Deposits]: Queue populated; processing '" . sizeof($queue) . "' message(s)... ");
 
         #store number of sent messages from queue
@@ -76,6 +84,7 @@ $mainLoop->addPeriodicTimer($config->get_queue_interval(), function() use ($conf
             #find all applicable destinations for each message in queue.
             $destinations = $config->get_deposits_for_source_channel($message->channel_id);
 
+            #loop through them.
             foreach($destinations as $destination) {
 
                 #process message with destination
@@ -89,7 +98,7 @@ $mainLoop->addPeriodicTimer($config->get_queue_interval(), function() use ($conf
         say("[Deposits]: Queue processing complete; sent '" . $sent . "' message(s).");
     }
 
-    #clear deposit queue of messages processed this cycle.
+    #clear deposit queue of messages that were processed this cycle.
     $config->clear_deposit_queue($queue);
 });
 
