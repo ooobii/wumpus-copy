@@ -17,13 +17,22 @@ class ChannelMonitor extends ChannelConnection
         $this->UserId = $fromId;
         parent::__construct(true, $guildId, $channelId, $nickname);
     }
-    public function get_user() {
+
+    /**
+     * Return the User ID this monitor must listen to.
+     *
+     * @return string
+     */
+    public function get_user() : string {
         return $this->UserId;
     }
-    public function get_nickname() {
-        return $this->Nickname;
-    }
 
+    /**
+     * With the current configuration, find the destinations that relate to this source.
+     *
+     * @param config_manager $config
+     * @return array
+     */
     public function get_connected_destinations(config_manager $config) {
         return array_filter($config->get_destinations(), function($item, $key) {
             if($item->ConnectedMonitorNickname == $this->Nickname) return true;
@@ -32,11 +41,25 @@ class ChannelMonitor extends ChannelConnection
         }, ARRAY_FILTER_USE_BOTH);
     }
 
+    /**
+     * With the current configuration, find the destination IDs that relate to this source.
+     *
+     * @param config_manager $config
+     * @return void
+     */
     public function get_connected_destination_ids(config_manager $config) {
         return array_column($this->get_connected_destinations($config), "ChannelID");
     }
 
 
+    /**
+     * Verify that the message qualifies to be delivered, and send it to the attached channel.
+     *
+     * @param config_manager $config The current configuration loaded from 'config.json'
+     * @param Discord $discord The $depositDiscord instance of the primary loop.
+     * @param Message $message The message to be duplicated to the connected channel.
+     * @return void
+     */
     public function process_message(config_manager $config, Discord $discord, Message $message) {
 
         #check to see if message ID is part of the monitored channel, and is from the monitored ID (if any).
@@ -46,6 +69,7 @@ class ChannelMonitor extends ChannelConnection
             #when part of monitored channel, process message forwarding to each connected destination.
             foreach($this->get_connected_destinations($config) as $destination) {
 
+                #process the message at the destination.
                 $destination->send_message($config, $discord, $message);
 
             }

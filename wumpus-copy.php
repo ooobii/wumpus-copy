@@ -1,5 +1,12 @@
 <?php
 #load packages
+
+ini_set('memory_limit', '-1');
+
+use Discord\Discord;
+use Discord\Parts\Channel\Message;
+use React\EventLoop\Factory;
+
 include __DIR__ . '/vendor/autoload.php';
 
 #load classes
@@ -13,32 +20,93 @@ require __DIR__ . '/lib/config_manager.php';
 #load config from JSON and 
 $config = new config_manager('config.json');
 
-#connect to Discord API
-$discord = new \Discord\Discord([
+
+#create main loop for queue processing and message handling
+$mainLoop = Factory::create();
+
+
+#declare both Discord instances using tokens from config
+$monitorDiscord = new Discord([
+    'token' => $config->get_individual_token(),
+    'loop' => $mainLoop,
+    'logging' => FALSE
+]);
+$depositDiscord = new Discord([
     'token' => $config->get_token(),
+    'loop' => $mainLoop,
     'logging' => FALSE
 ]);
 
 
-#prep handling for when Discord has authenticated through REST API.
-$discord->on('ready', function ($discord) use ($config) {
+#declare function for handling startup of the monitor instance.
+$monitorReadyHandler = function(Discord $discord) use($config) {
 
-    #prep handling for when a  message is received on a channel this account is a member of.
-    $discord->on('message', function ($message) use ($config, $discord) {
+    #declare handler for incoming messages on monitor instance
+    $discord->on('message', function (Message $message) use ($config) {
 
-        #check to see if the bot is not the author, and if the message occurred in a monitored channel
-        if($message->author->id != $discord->id && in_array($message->channel_id, $config->get_monitored_channels() ) ) {   
-            
-            #let qualified monitors handle the message
-            $monitors = $config->get_monitors_for_channel($message->channel_id);
-            foreach($monitors as $monitor) {
-                $monitor->process_message($config, $discord, $message);                
-            }
+        #check to see if author and channel are being monitored.
+        if(in_array($message->channel_id, $config->get_monitored_channels())) {
+
+            #add message to deposit queue
+            say("[Monitor]: Found Message; adding to queue.");
+            $config->add_deposit_queue($message);
+
         }
 
     });
 
+    say("Monitor Instance Ready!");
+    
+};
+
+#declare function for handling startup of the bot instance.
+$depositReadyHandler = function(Discord $discord) use($config) {
+    say("Deposit Instance Ready!");
+};
+
+#add the queue processing periodic loop to the main loop.
+$mainLoop->addPeriodicTimer($config->get_queue_interval(), function() use ($config, $depositDiscord) {
+    #copy current instance of queue as to not disturb adding new messages during queue processing.
+    $queue = $config->get_deposit_queue();
+
+    #if queue copy is not empty, pass messages to depositors.
+    if(sizeof($queue) > 0) {
+        
+        #notify queue is populated.
+        say("[Deposits]: Queue populated; processing '" . sizeof($queue) . "' message(s)... ");
+
+        #store number of sent messages from queue
+        $sent = 0;
+
+        #loop through messages in queue.
+        foreach($queue as $message) {
+
+            #find all applicable destinations for each message in queue.
+            $destinations = $config->get_deposits_for_source_channel($message->channel_id);
+
+            #loop through them.
+            foreach($destinations as $destination) {
+
+                #process message with destination
+                $sent += $destination->send_message($config, $depositDiscord, $message);
+
+            }
+
+        }
+
+        #report how many queued items were processed
+        say("[Deposits]: Queue processing complete; sent '" . $sent . "' message(s).");
+    }
+
+    #clear deposit queue of messages that were processed this cycle.
+    $config->clear_deposit_queue($queue);
 });
 
-#using defined handlers, begin communications with the Discord API.
-$discord->run();
+
+#add handlers
+$monitorDiscord->on('ready', $monitorReadyHandler);
+$depositDiscord->on('ready', $depositReadyHandler);
+
+#start main loop
+$mainLoop->run();
+

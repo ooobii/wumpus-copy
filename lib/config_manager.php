@@ -10,7 +10,17 @@ class config_manager
 
         #fetch token from JSON data
         if(!$rawJSON['properties']['botToken']) throw new Exception("Invalid configuration; missing 'properties/botToken' value.");
-        $this->DiscordToken = $rawJSON['properties']['botToken'];
+        $this->BotToken = $rawJSON['properties']['botToken'];
+
+        #fetch individual from JSON data
+        if(!$rawJSON['properties']['individualToken']) throw new Exception("Invalid configuration; missing 'properties/individualToken' value.");
+        $this->IndividualToken = $rawJSON['properties']['individualToken'];
+
+        #fetch individual from JSON data
+        if(!$rawJSON['properties']['queueInterval'] || !is_numeric($rawJSON['properties']['queueInterval']) || $rawJSON['properties']['queueInterval'] < 0) {
+            throw new Exception("Invalid configuration; missing 'properties/queueInterval' value.");
+        }
+        $this->QueueInterval = $rawJSON['properties']['queueInterval'];
 
         #Create Source Monitors
         $this->SourceMonitors = array();
@@ -60,10 +70,41 @@ class config_manager
 
         }
 
+        #create deposit queue (array of messages waiting to be processed from monitor thread)
+        $this->DepositQueue = array();
     }
 
     public function get_token() {
-        return $this->DiscordToken;
+        return $this->BotToken;
+    }
+    public function get_individual_token() {
+        return $this->IndividualToken;
+    }
+
+    public function get_queue_interval() {
+        return $this->QueueInterval;
+    }
+
+    public function get_deposit_queue() {
+        return $this->DepositQueue;
+    }
+    public function clear_deposit_queue($processedQueue) {
+        try {
+            $this->DepositQueue = array_diff($this->DepositQueue, $processedQueue);
+
+            return TRUE;
+        } catch (Throwable $ex) {
+            return FALSE;
+        }
+    }
+    public function add_deposit_queue($message) {
+        try {
+            array_push($this->DepositQueue, $message);
+
+            return TRUE;
+        } catch (Throwable $ex) {
+            return FALSE;
+        }
     }
 
 
@@ -73,12 +114,32 @@ class config_manager
     public function get_monitored_channels() {
         return array_column($this->get_monitors(), 'ChannelId');
     }
+    public function get_monitored_authors() {
+        return array_column($this->get_monitors(), 'UserId');
+    }
     public function get_monitor($monitorNickname) {
         return $this->SourceMonitors[$monitorNickname];
     }
     public function get_monitors_for_channel($channelId) {
         return array_filter($this->get_monitors(), function(ChannelMonitor $item, $key) use($channelId) {
             if($item->get_channel_id() == $channelId) return TRUE;
+                
+            return FALSE;
+        }, ARRAY_FILTER_USE_BOTH);
+    }
+
+    public function get_deposits() {
+        return $this->DestinationConnections;
+    }
+    public function get_deposit_channels() {
+        return array_column($this->get_deposits(), 'ChannelId');
+    }
+    public function get_deposit($connectionNickname) {
+        return $this->DepositConnections[$connectionNickname];
+    }
+    public function get_deposits_for_source_channel($channelId) {
+        return array_filter($this->get_deposits(), function(DestinationChannel $item, $key) use($channelId) {
+            if($item->get_connected_monitor($this)->get_channel_id() == $channelId) return TRUE;
                 
             return FALSE;
         }, ARRAY_FILTER_USE_BOTH);

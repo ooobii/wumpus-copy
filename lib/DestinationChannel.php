@@ -1,7 +1,6 @@
 <?php
 use Discord\Discord;
 use Discord\Parts\Channel\Message;
-use Discord\Parts\GuildRepository;
 require_once __DIR__ . "/ChannelMonitor.php";
 
 class DestinationChannel extends ChannelConnection
@@ -27,7 +26,7 @@ class DestinationChannel extends ChannelConnection
     }
 
 
-    public function send_message(config_manager $config, Discord $discord, Message $message) : int { 
+    public function send_message(config_manager $config, Discord $discord, Message $message) : int {
 
         #abort if ChannelID of message is not the ChannelID of the monitor.
         if($message->channel_id != $this->get_connected_monitor($config)->get_channel_id()) return 0;
@@ -39,9 +38,10 @@ class DestinationChannel extends ChannelConnection
             #if guild is found, get the channel for this deposit connector
             $channel = $guild->channels->get('id', $this->get_channel_id());
             if(!is_null($channel)) {
+                $content = $message->author->username . ": ". $message->content;
 
                 #if channel is found, send the message to the channel for this deposit connection.
-                $channel->sendMessage($message->author->username . ": ". $message->content);
+                $channel->sendMessage($content);
                 return 1;
 
             }
