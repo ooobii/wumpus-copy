@@ -62,7 +62,7 @@ class config_manager
                     if(!$this->SourceMonitors[$monitorNick]) throw new Exception("Invalid configuration; The monitor '$monitorNick' specified in destination '$destNickname' does not exist.");
 
                     #create a monitor record, and add it to source monitors collection
-                    $destination = new DestinationChannel($source['guildID'], $destChanId, $monitorNick, ($useAltNick ? $altNick : $destNickname));
+                    $destination = new DestinationChannel($dest['guildID'], $destChanId, $monitorNick, ($useAltNick ? $altNick : $destNickname));
                     $this->DestinationConnections[($useAltNick ? $altNick : $destNickname)] = $destination;
                 }
 
