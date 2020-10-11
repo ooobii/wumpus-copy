@@ -65,7 +65,7 @@ $depositReadyHandler = function(Discord $discord) use($config) {
 };
 
 #add the queue processing periodic loop to the main loop.
-$mainLoop->addPeriodicTimer($config->get_queue_interval(), function() use ($config, $depositDiscord) {
+$queueProcessLoop = function() use ($config, $depositDiscord) {
     #copy current instance of queue as to not disturb adding new messages during queue processing.
     $queue = $config->get_deposit_queue();
 
@@ -100,7 +100,8 @@ $mainLoop->addPeriodicTimer($config->get_queue_interval(), function() use ($conf
 
     #clear deposit queue of messages that were processed this cycle.
     $config->clear_deposit_queue($queue);
-});
+};
+$mainLoop->addPeriodicTimer($config->get_queue_interval(), $queueProcessLoop);
 
 
 #add handlers
