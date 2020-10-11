@@ -41,14 +41,17 @@ class DestinationChannel extends ChannelConnection
                 $content = $message->author->username . ": ". $message->content;
 
                 #if channel is found, send the message to the channel for this deposit connection.
-                $channel->sendMessage($content);
-                return 1;
+                $channel->sendMessage($content)->then(function ($message) {
+                    return 1;
+                })->otherwise(function ($e) {
+                    return 0;
+                });
+                return 0;
 
             }
             return 0;
 
-        }
-        
+        }      
         return 0;
     }
 
