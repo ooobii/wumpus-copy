@@ -3,7 +3,7 @@ function say($msg, $nl = 1)
 {
     $printDate = true;
 
-    if ($msg == "OK!") {
+    if ($msg == "OK!" || $msg == "ERROR!") {
         $printDate = false;
     }
 
