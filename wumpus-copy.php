@@ -47,8 +47,12 @@ $monitorReadyHandler = function(Discord $discord) use($config) {
         if(in_array($message->channel_id, $config->get_monitored_channels())) {
 
             #add message to deposit queue
-            say("[Monitor]: Found Message; adding to queue.");
-            $config->add_deposit_queue($message);
+            say("[Monitor]: Found Message; adding to queue...", 0);
+            if(!$config->add_deposit_queue($message)) {
+                say("ERROR!");
+            } else {
+                say("OK!");
+            }
 
         }
 
