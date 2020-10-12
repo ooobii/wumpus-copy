@@ -104,8 +104,20 @@ $queueProcessLoop = function() use ($config, $depositDiscord) {
 
         }
 
-        #report how many queued items were processed
-        say("[Deposit]: Queue processing complete; sent '" . $sent . "' message(s).");
+        #report how many queued items were processed, and report errors if any
+        if($errors == 0 && $sent > 0) {
+            #if no errors occurred
+            say("[Deposit]: All queue items processed successfully; sent '" . $sent . "' message(s).");
+
+        } elseif($errors > 0 && $sent > 0) {
+            #if errors and successes occurred
+            say("[Deposit]: All queue items processed successfully; sent '" . $sent . "' message(s).");
+
+        } elseif($errors > 0 && $sent == 0) {
+            #if no successes occurred
+            say("[Deposit]: ERROR! All {$errors} queue items failed to process.");
+
+        }
     }
 
     #clear deposit queue of messages that were processed this cycle.
