@@ -17,7 +17,10 @@ class config_manager
         $this->IndividualToken = $rawJSON['properties']['individualToken'];
 
         #fetch deposit queue process interval in seconds from JSON data
-        if(!$rawJSON['properties']['queueInterval'] || !is_numeric($rawJSON['properties']['queueInterval']) || $rawJSON['properties']['queueInterval'] < 0) {
+        if(!$rawJSON['properties']['queueInterval'] || 
+           !is_numeric($rawJSON['properties']['queueInterval']) || 
+           $rawJSON['properties']['queueInterval'] < 0) 
+        {
             throw new Exception("Invalid configuration; missing 'properties/queueInterval' value.");
         }
         $this->QueueInterval = $rawJSON['properties']['queueInterval'];
