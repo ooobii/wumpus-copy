@@ -95,7 +95,7 @@ $queueProcessLoop = function() use ($config, $depositDiscord) {
 
                 #process message with destination
                 $result = $destination->send_message($config, $depositDiscord, $message);
-                if($result < 1) {
+                if($result != 1) {
                     $errors += 1;
                 } else {
                     $sent += 1;
