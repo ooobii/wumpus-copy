@@ -5,7 +5,6 @@ ini_set('memory_limit', '-1');
 
 use Discord\Discord;
 use Discord\Parts\Channel\Message;
-use React\EventLoop\Factory;
 
 include __DIR__ . '/vendor/autoload.php';
 
@@ -22,7 +21,7 @@ $config = new config_manager('config.json');
 
 
 #create main loop for queue processing and message handling
-$mainLoop = Factory::create();
+$mainLoop = React\EventLoop\Factory::create();
 
 
 #declare both Discord instances using tokens from config
