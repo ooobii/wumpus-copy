@@ -76,10 +76,13 @@ $queueProcessLoop = function() use ($config, $depositDiscord) {
     if(sizeof($queue) > 0) {
         
         #notify queue is populated.
-        say("[Deposits]: Queue populated; processing '" . sizeof($queue) . "' message(s)... ");
+        say("[Deposit]: Queue populated; processing '" . sizeof($queue) . "' message(s)... ");
 
         #store number of sent messages from queue
         $sent = 0;
+
+        #store number of errors that occur from processing message queue.
+        $errors = 0;
 
         #loop through messages in queue.
         foreach($queue as $message) {
@@ -91,14 +94,18 @@ $queueProcessLoop = function() use ($config, $depositDiscord) {
             foreach($destinations as $destination) {
 
                 #process message with destination
-                $sent += $destination->send_message($config, $depositDiscord, $message);
-
+                $result = $destination->send_message($config, $depositDiscord, $message);
+                if($result < 1) {
+                    $errors += 1;
+                } else {
+                    $sent += 1;
+                }
             }
 
         }
 
         #report how many queued items were processed
-        say("[Deposits]: Queue processing complete; sent '" . $sent . "' message(s).");
+        say("[Deposit]: Queue processing complete; sent '" . $sent . "' message(s).");
     }
 
     #clear deposit queue of messages that were processed this cycle.
