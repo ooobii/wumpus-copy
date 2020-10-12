@@ -5,7 +5,6 @@ ini_set('memory_limit', '-1');
 
 use Discord\Discord;
 use Discord\Parts\Channel\Message;
-use React\EventLoop\Factory;
 
 include __DIR__ . '/vendor/autoload.php';
 
@@ -22,7 +21,7 @@ $config = new config_manager('config.json');
 
 
 #create main loop for queue processing and message handling
-$mainLoop = Factory::create();
+$mainLoop = React\EventLoop\Factory::create();
 
 
 #declare both Discord instances using tokens from config
@@ -48,8 +47,12 @@ $monitorReadyHandler = function(Discord $discord) use($config) {
         if(in_array($message->channel_id, $config->get_monitored_channels())) {
 
             #add message to deposit queue
-            say("[Monitor]: Found Message; adding to queue.");
-            $config->add_deposit_queue($message);
+            say("[Monitor]: Found Message; adding to queue...", 0);
+            if(!$config->add_deposit_queue($message)) {
+                say("ERROR!");
+            } else {
+                say("OK!");
+            }
 
         }
 
@@ -73,10 +76,13 @@ $queueProcessLoop = function() use ($config, $depositDiscord) {
     if(sizeof($queue) > 0) {
         
         #notify queue is populated.
-        say("[Deposits]: Queue populated; processing '" . sizeof($queue) . "' message(s)... ");
+        say("[Deposit]: Queue populated; processing '" . sizeof($queue) . "' message(s)... ");
 
         #store number of sent messages from queue
         $sent = 0;
+
+        #store number of errors that occur from processing message queue.
+        $errors = 0;
 
         #loop through messages in queue.
         foreach($queue as $message) {
@@ -88,14 +94,30 @@ $queueProcessLoop = function() use ($config, $depositDiscord) {
             foreach($destinations as $destination) {
 
                 #process message with destination
-                $sent += $destination->send_message($config, $depositDiscord, $message);
-
+                $result = $destination->send_message($config, $depositDiscord, $message);
+                if($result != 1) {
+                    $errors += 1;
+                } else {
+                    $sent += 1;
+                }
             }
 
         }
 
-        #report how many queued items were processed
-        say("[Deposits]: Queue processing complete; sent '" . $sent . "' message(s).");
+        #report how many queued items were processed, and report errors if any
+        if($errors == 0 && $sent > 0) {
+            #if no errors occurred
+            say("[Deposit]: All queue items processed successfully; sent '" . $sent . "' message(s).");
+
+        } elseif($errors > 0 && $sent > 0) {
+            #if errors and successes occurred
+            say("[Deposit]: All queue items processed successfully; sent '" . $sent . "' message(s).");
+
+        } elseif($errors > 0 && $sent == 0) {
+            #if no successes occurred
+            say("[Deposit]: ERROR! All {$errors} queue items failed to process.");
+
+        }
     }
 
     #clear deposit queue of messages that were processed this cycle.
