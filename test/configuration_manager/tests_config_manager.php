@@ -63,4 +63,79 @@ class tests_config_manager extends TestCase
         );
     }
 
+    public function testMetadata() 
+    {
+        #define test variant type
+        $fileVariant = 'valid_simple';
+
+
+        #load the valid test configuration.
+        $testConfig = new config_manager("test/configuration_manager/json/testConfig_$fileVariant.json");
+
+        
+        #make sure config is not empty
+        $this->assertNotEmpty($testConfig);
+        $monitors = $testConfig->get_monitors();
+
+
+        #verify monitor 1 exists
+        $this->assertArrayHasKey(
+            'source1', 
+            $monitors, 
+            "Configuration manager did not load the 'source1' monitor (File: testConfig_$fileVariant.json)."
+        );
+
+        #verify monitor 2 exists
+        $this->assertArrayHasKey(
+            'source2', 
+            $monitors, 
+            "Configuration manager did not load the 'source2' monitor (File: testConfig_$fileVariant.json)."
+        );
+
+
+        #get monitor 1 and test metadata
+        $this->assertEquals(
+            "[source1-userFilter]", 
+            $monitors["source1"]->get_user(), 
+            "Configuration manager failed to load the user filter from source1 (File: testConfig_$fileVariant.json)."
+        );
+        $this->assertEquals(
+            "[source1-GuildId]",  
+            $monitors["source1"]->get_guild_id(), 
+            "Configuration manager failed to load the GuildID from source1 (File: testConfig_$fileVariant.json)."
+        );
+        $this->assertEquals(
+            "[source1-ChannelId]",  
+            $monitors["source1"]->get_channel_id(), 
+            "Configuration manager failed to load the ChannelID from source1 (File: testConfig_$fileVariant.json)."
+        );
+        $this->assertEquals(
+            "source1",  
+            $monitors["source1"]->get_nickname(), 
+            "Configuration manager failed to load the ChannelID from source1 (File: testConfig_$fileVariant.json)."
+        );
+
+
+        #get monitor 2 and test metadata
+        $this->assertEquals(
+            "[source2-userFilter]", 
+            $monitors["source2"]->get_user(), 
+            "Configuration manager failed to load the user filter from source2 (File: testConfig_$fileVariant.json)."
+        );
+        $this->assertEquals(
+            "[source2-GuildId]",  
+            $monitors["source2"]->get_guild_id(), 
+            "Configuration manager failed to load the GuildID from source2 (File: testConfig_$fileVariant.json)."
+        );
+        $this->assertEquals(
+            "[source2-ChannelId]",  
+            $monitors["source2"]->get_channel_id(), 
+            "Configuration manager failed to load the ChannelID from source2 (File: testConfig_$fileVariant.json)."
+        );
+        $this->assertEquals(
+            "source2",  
+            $monitors["source2"]->get_nickname(), 
+            "Configuration manager failed to load the ChannelID from source2 (File: testConfig_$fileVariant.json)."
+        );
+    }
 }
