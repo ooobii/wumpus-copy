@@ -40,4 +40,27 @@ class tests_config_manager extends TestCase
         );
 
     }
+
+    public function testSerialization() 
+    {
+        #define test variant type
+        $fileVariant = 'valid_simple';
+
+
+        #load the valid test configuration.
+        $testConfig = new config_manager("test/configuration_manager/json/testConfig_$fileVariant.json");
+
+        
+        #make sure config is not empty
+        $this->assertNotEmpty($testConfig);
+
+        
+        #serialize configuration manager class to JSON, and compare to correct serialization.
+        $this->assertStringEqualsFile(
+            "test/configuration_manager/serialized/serialized_$fileVariant.array", 
+            json_encode($testConfig),
+            "Configuration manager failed to correctly serialize the config file (File: testConfig_$fileVariant.json)."
+        );
+    }
+
 }
