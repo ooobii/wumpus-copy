@@ -1,0 +1,67 @@
+{
+    "properties": {
+        "botToken": "[BotToken]",
+        "individualToken": "[UserToken]",
+        "queueInterval": 5
+    },
+    "monitors": {
+        "source1": {
+            "guildID": "[source1-GuildId]",
+            "channelID": "[source1-ChannelId]",
+            "fromUserID": "[source1-userFilter]"
+        },
+        "source2": {
+            "guildID": "[source2-GuildId]",
+            "channelID": "[source2-ChannelId]",
+            "fromUserID": "[source2-userFilter]"
+        },
+        "source3": {
+            "guildID": "[source3-GuildId]",
+            "channelID": "[source3-ChannelId]",
+            "fromUserID": "[source3-userFilter]"
+        },
+        "source4": {
+            "guildID": "[source4-GuildId]",
+            "channelID": "[source4-ChannelId]",
+            "fromUserID": "[source4-userFilter]"
+        },
+        "source5": {
+            "guildID": "[source5-GuildId]",
+            "channelID": "[source5-ChannelId]",
+            "fromUserID": "[source5-userFilter]"
+        },
+        "source6": {
+            "guildID": "[source6-GuildId]",
+            "channelID": "[source6-ChannelId]",
+            "fromUserID": "[source6-userFilter]"
+        }
+        
+    },
+    "destinations": {
+        "destA": {
+            "guildID": "[destA-GuildId]",
+            "channelIDs": ["[destA-Channel1]", "[destA-Channel2]"],
+            "fromSource": ["source3"]
+        },
+        "destB": {
+            "guildID": "[destB-GuildId]",
+            "channelIDs": ["[destB-Channel1]"],
+            "fromSource": ["source2", "source3"]
+        },
+        "destC": {
+            "guildID": "[destC-GuildId]",
+            "channelIDs": ["[destC-Channel1]"],
+            "fromSource": ["source4", "source5", "source6"]
+        },
+        "destD": {
+            "guildID": "[destD-GuildId]",
+            "channelIDs": ["[destD-Channel1]"],
+            "fromSource": ["source1"]
+        },
+        "destE": {
+            "guildID": "[destE-GuildId]",
+            "channelIDs": ["[destE-Channel1]", "[destE-Channel2]", "[destE-Channel3]", "[destE-Channel4]"],
+            "fromSource": ["source5", "source6"]
+        }
+    }
+}
