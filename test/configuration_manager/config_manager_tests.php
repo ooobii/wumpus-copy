@@ -138,16 +138,31 @@ class tests_config_manager extends TestCase
 
             switch ($fileVariant) {
                 case 'valid_simple':
-                    $this->assertContains(
-                        '[destA-Channel1]'
-                        , $monitors['source1']->get_connected_destination_ids($testConfig)
-                        , "Configuration Manager failed to create a relationship between Source 1 and Destination A"
+                    #validate source connections to destinations
+                    $this->assertEquals(
+                        array('destA' => $destinations['destA'])
+                        , $monitors['source1']->get_connected_destinations($testConfig)
+                        , "Configuration Manager failed to create a relationship between Source 1 and Destination A."
                     );
-                    $this->assertContains(
-                        '[destB-Channel1]'
-                        , $monitors['source2']->get_connected_destination_ids($testConfig)
-                        , "Configuration Manager failed to create a relationship between Source 2 and Destination B"
+                    $this->assertEquals(
+                        array('destB' => $destinations['destB'])
+                        , $monitors['source2']->get_connected_destinations($testConfig)
+                        , "Configuration Manager failed to create a relationship between Source 2 and Destination B."
                     );
+
+
+                    #validate destination connections to sources
+                    $this->assertEquals(
+                        $monitors['source1']
+                        , $destinations['destA']->get_connected_monitor($testConfig)
+                        , "Configuration Manager failed to create a relationship between Destination A and Source 1."
+                    );
+                    $this->assertEquals(
+                        $monitors['source2']
+                        , $destinations['destB']->get_connected_monitor($testConfig)
+                        , "Configuration Manager failed to create a relationship between Destination B and Source 2."
+                    );
+
                     break;
 
                 case 'valid_complex':
