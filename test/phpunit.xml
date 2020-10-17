@@ -1,8 +1,9 @@
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
+         cacheResult="false"
          verbose="true">
   <testsuites>
-    <testsuite name="Tests">
+    <testsuite name="Configuration Manager Tests">
       <directory suffix="_tests.php">configuration_manager</directory>
     </testsuite>
   </testsuites>
