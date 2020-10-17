@@ -129,11 +129,11 @@ class tests_config_manager extends TestCase
             $destinations = $testConfig->get_destinations();
             $this->assertNotEmpty(
                 $monitors
-                , "Configuration Manager: Unable to fetch monitors from configuration class instance."
+                , "Configuration Manager: Unable to fetch monitors from configuration class instance (File: testConfig_$fileVariant.json)."
             );
             $this->assertNotEmpty(
                 $destinations
-                , "Configuration Manager: Unable to fetch deposit destinations from configuration class instance."
+                , "Configuration Manager: Unable to fetch deposit destinations from configuration class instance (File: testConfig_$fileVariant.json)."
             );
 
             switch ($fileVariant) {
@@ -142,12 +142,12 @@ class tests_config_manager extends TestCase
                     $this->assertEquals(
                         array('destA' => $destinations['destA'])
                         , $monitors['source1']->get_connected_destinations($testConfig)
-                        , "Configuration Manager failed to create a relationship between Source 1 and Destination A."
+                        , "Configuration Manager failed to create a relationship between Source 1 and Destination A (File: testConfig_$fileVariant.json)."
                     );
                     $this->assertEquals(
                         array('destB' => $destinations['destB'])
                         , $monitors['source2']->get_connected_destinations($testConfig)
-                        , "Configuration Manager failed to create a relationship between Source 2 and Destination B."
+                        , "Configuration Manager failed to create a relationship between Source 2 and Destination B (File: testConfig_$fileVariant.json)."
                     );
 
 
@@ -155,12 +155,12 @@ class tests_config_manager extends TestCase
                     $this->assertEquals(
                         $monitors['source1']
                         , $destinations['destA']->get_connected_monitor($testConfig)
-                        , "Configuration Manager failed to create a relationship between Destination A and Source 1."
+                        , "Configuration Manager failed to create a relationship between Destination A and Source 1 (File: testConfig_$fileVariant.json)."
                     );
                     $this->assertEquals(
                         $monitors['source2']
                         , $destinations['destB']->get_connected_monitor($testConfig)
-                        , "Configuration Manager failed to create a relationship between Destination B and Source 2."
+                        , "Configuration Manager failed to create a relationship between Destination B and Source 2 (File: testConfig_$fileVariant.json)."
                     );
 
                     break;
