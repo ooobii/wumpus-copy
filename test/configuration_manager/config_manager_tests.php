@@ -3,7 +3,7 @@ use PHPUnit\Framework\TestCase;
 
 require __DIR__ . '/../../lib/requires.php';
 
-class tests_config_manager extends TestCase
+class ConfigurationManagerTests extends TestCase
 {
     public function testInvalid_Parsing_1() {
         $this->expectException(Exception::class);
@@ -54,7 +54,7 @@ class tests_config_manager extends TestCase
 
 
 
-    public function testMonitorMetadata_Simple()
+    public function testMonitor_Metadata_Simple()
     {
         #define test variant type
         $fileVariant = 'valid_simple';
@@ -127,7 +127,7 @@ class tests_config_manager extends TestCase
 
     }
 
-    public function testMonitorMetadata_Complex()
+    public function testMonitor_Metadata_Complex()
     {
         #define test variant type
         $fileVariant = 'valid_complex';
@@ -313,7 +313,7 @@ class tests_config_manager extends TestCase
 
 
 
-    public function testDestinationMetadata_Simple()
+    public function testDestination_Metadata_Simple()
     {
         #define test variant type
         $fileVariant = 'valid_simple';
@@ -376,7 +376,7 @@ class tests_config_manager extends TestCase
 
     }
 
-    public function testDestinationMetadata_Complex()
+    public function testDestination_Metadata_Complex()
     {
         #define test variant type
         $fileVariant = 'valid_complex';
