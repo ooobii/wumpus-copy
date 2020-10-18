@@ -1,3 +1,5 @@
 /vendor
 /config.json
 /.vscode
+/phpunit
+/build

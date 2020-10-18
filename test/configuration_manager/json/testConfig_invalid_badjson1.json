@@ -1,0 +1,32 @@
+{
+    "properties": {
+        "botToken": "[BotToken]",
+        "individualToken": "[UserToken]",
+        "queueInterval": 5
+    },
+    "monitors": {
+        "source1" {
+            "guildID": "[source1-GuildId]",
+            "channelID": "[source1-ChannelId]",
+            "fromUserID": "[source1-userFilter]"
+        },
+        "source2": {
+            "guildID": "[source2-GuildId]",
+            "channelID": "[source2-ChannelId]",
+            "fromUserID": "[source2-userFilter]"
+        },
+        "source3"        
+    },
+    "destinations": {
+        "destA": {
+            "guildID": "[destA-GuildId]",
+            "channelIDs": ["[destA-Channel1]", "[destA-Channel2]"],
+            "fromSource": ["source3"]
+        },
+        "destB": {
+            "guildID": "[destB-GuildId]",
+            "channelIDs": ["[destB-Channel1]"],
+            "fromSource": ["source2", "source3"]
+        }
+    }
+}

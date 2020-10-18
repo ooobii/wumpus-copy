@@ -1,0 +1,26 @@
+<!-- phpunit Test Execution Configuration 
+This configuration contains the test suites to be ran and passed before a Release build should be executed.
+
+Logging options have been configured for Jenkins to interpret test results before continuing.
+
+-->
+
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         cacheResult="false"
+         verbose="true">
+
+
+  <testsuites>
+    <testsuite name="Configuration Manager Tests">
+      <directory suffix="_tests.php">configuration_manager</directory>
+    </testsuite>
+  </testsuites>
+
+
+
+  <logging>
+    <junit outputFile="../build/logs/junit.xml"/>
+    <testdoxHtml outputFile="../build/logs/html.html"/>
+  </logging>
+</phpunit>

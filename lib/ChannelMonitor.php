@@ -48,7 +48,7 @@ class ChannelMonitor extends ChannelConnection
      * @return void
      */
     public function get_connected_destination_ids(config_manager $config) {
-        return array_column($this->get_connected_destinations($config), "ChannelID");
+        return array_column($this->get_connected_destinations($config), "ChannelId");
     }
 
 
