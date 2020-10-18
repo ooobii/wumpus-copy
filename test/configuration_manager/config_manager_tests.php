@@ -5,6 +5,22 @@ require __DIR__ . '/../../lib/requires.php';
 
 class tests_config_manager extends TestCase
 {
+    public function testInvalid_Parsing_1() {
+        $this->expectException(Exception::class);
+        $testConfig = new config_manager(__DIR__ . "/json/testConfig_invalid_badjson1.json");
+
+    }
+    public function testInvalid_Parsing_2() {
+        $this->expectException(Exception::class);
+        $testConfig = new config_manager(__DIR__ . "/json/testConfig_invalid_badjson2.json");
+        
+    }
+    public function testInvalid_Parsing_3() {
+        $this->expectException(Exception::class);
+        $testConfig = new config_manager(__DIR__ . "/json/testConfig_invalid_badjson3.json");
+        
+    }
+
 
     public function testParsing_Simple()
     {
