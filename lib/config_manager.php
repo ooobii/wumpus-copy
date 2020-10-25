@@ -5,6 +5,7 @@ class config_manager
     public function __construct($filePath)
     {
         #read the file and decode the JSON data into a PHP array.
+        if (!file_exists($filePath)) throw new Exception("Invalid configuration; Unable to locate JSON configuration file at '$filePath'.");
         $rawJSON = json_decode(file_get_contents($filePath), true);
         if (!$rawJSON) throw new Exception("Invalid configuration; Unable to parse JSON configuration. Validate formatting and try again.");
 
