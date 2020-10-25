@@ -12,8 +12,8 @@ Logging options have been configured for Jenkins to interpret test results befor
 
 
   <testsuites>
-    <testsuite name="Configuration Manager Tests">
-      <directory suffix="_tests.php">configuration_manager</directory>
+    <testsuite name="Configuration Manager">
+      <file>configuration_manager/config_manager_tests.php</file>
     </testsuite>
   </testsuites>
 
