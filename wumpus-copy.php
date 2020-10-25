@@ -14,8 +14,17 @@ include __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/lib/requires.php';
 
 // START =================================
-#load config from JSON and 
-$config = new config_manager('config.json');
+#load config from JSON; use installed config if no argument provided.
+if(sizeof($argv) != 2) {
+    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        $configLoc = '%APPDATA%/wumpus-copy/config.json';
+    } else {
+        $configLoc = '/etc/wumpus-copy/config.json';
+    }
+} else {
+    $configLoc = $argv[1];
+}
+$config = new config_manager($configLoc);
 
 
 #create main loop for queue processing and message handling

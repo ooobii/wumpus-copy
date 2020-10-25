@@ -13,7 +13,7 @@
         
     },
     "destinations": {
-        "oobi-dest-a": {
+        "destName1": {
             "guildID": "",
             "channelIDs": [""],
             "fromSource": ["sourceName1"]
