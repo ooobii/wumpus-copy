@@ -20,7 +20,7 @@ Logging options have been configured for Jenkins to interpret test results befor
 
 
   <logging>
-    <junit outputFile="../build/logs/junit.xml"/>
-    <testdoxHtml outputFile="../build/logs/html.html"/>
+    <junit outputFile="logs/junit.xml"/>
+    <testdoxHtml outputFile="logs/html.html"/>
   </logging>
 </phpunit>
