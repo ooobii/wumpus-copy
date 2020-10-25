@@ -3,7 +3,7 @@
 all: package
 clean: remove_files
 
-package: clean create_struct copy_files composer_install create_control create_deb clean
+package: clean create_struct copy_files composer_install create_control create_deb
 install: clean package install_deb
 test: package install uninstall clean
 
