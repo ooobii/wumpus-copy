@@ -51,7 +51,7 @@ create_struct:
 
 copy_files:
 	# generate manpage from README...
-	pandoc -s --metadata title=wumpuscopy\(1\) -t man $(PROJ_DIR)/README.md -o $(MAN_DIR)/wumpuscopy.1 
+	pandoc -s --metadata title=wumpuscopy\(1\) -t man $(PROJ_DIR)/man/wumpuscopy.1.md -o $(MAN_DIR)/wumpuscopy.1 
 
 	# copy libraries...
 	mkdir $(LIB_DIR)/lib
