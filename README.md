@@ -1,5 +1,5 @@
 
-# NAME
+# Name
 WumpusCopy
 
 A PHP-Based Discord bot that utilizes an individual user's token to monitor for messages that should be copied to another server that the connected bot belongs to. 
