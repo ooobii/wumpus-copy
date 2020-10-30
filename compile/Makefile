@@ -1,4 +1,4 @@
-#depends on pandoc curl dpkg php7.3 php7.3-cli php7.3-mbstring php7.3-json php7.3-xml
+#depends on pandoc curl dpkg php7.3 php7.3-cli php7.3-mbstring php7.3-json php7.3-xml 
 
 all: package
 clean: remove_files
