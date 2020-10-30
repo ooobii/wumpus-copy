@@ -97,16 +97,16 @@ composer_install:
 
 create_control:
 	# write debian package control file...
-	@/bin/echo -e \
-Package: wumpuscopy \\n\
-Version: $(VER_MAJOR).$(VER_MINOR)-$(VER_REVIS) \\n\
-Section: base \\n\
-Priority: optional \\n\
-Architecture: amd64 \\n\
-Depends: php7.3, php7.3-cli, php7.3-json, php7.3-mbstring, git, unzip \\n\
-Maintainer: Matthew Wendel \<matthewwendel77\@gmail.com\> \\n\
-Description: A Discord bot that allows messages to be coppied from an individual's available channels to a bot's available channels. \
->> $(PKG_DIR)/DEBIAN/control
+	cat << EOF > $(PKG_DIR)/DEBIAN/control
+Package: wumpuscopy
+Version: $(VER_MAJOR).$(VER_MINOR)-$(VER_REVIS)
+Section: base
+Priority: optional
+Architecture: amd64
+Depends: php7.3, php7.3-cli, php7.3-json, php7.3-mbstring, git, unzip
+Maintainer: Matthew Wendel \<matthewwendel77\@gmail.com\>
+Description: A Discord bot that allows messages to be coppied from an individual's available channels to a bot's available channels.
+EOF
 
 
 create_deb:
