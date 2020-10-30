@@ -12,7 +12,7 @@ VER_MAJOR=1
 VER_MINOR=0
 VER_REVIS=1
 
-PROJ_DIR=./../../wumpus-copy
+PROJ_DIR=.
 
 PKG_NAME=wumpuscopy_$(VER_MAJOR).$(VER_MINOR)-$(VER_REVIS)
 PKG_BUILD_DIR=./../build
