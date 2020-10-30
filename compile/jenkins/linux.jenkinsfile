@@ -22,37 +22,37 @@ pipeline {
                 }
                 stage('Clone Repository') {
                     steps {
-                        sh 'git clone https://github.com/ooobii/wumpus-copy.git'
+                        sh 'git clone https://github.com/ooobii/wumpus-copy.git .'
                     }
                 }
             }
         }
         stage('Install Composer Pkgs') {
             steps {
-                sh './composer/composer install --no-cache -d ./wumpus-copy'
+                sh './composer/composer install --no-cache'
             }
         }
         stage('Remove Composer') {
             steps {
-                sh 'rm -rf composer'
+                sh 'rm -rf ./composer'
             }
         }
         stage('Execute Tests') {
             steps {
-                sh './wumpus-copy/vendor/phpunit/phpunit/phpunit --configuration ./wumpus-copy/test/phpunit.xml'
+                sh './vendor/phpunit/phpunit/phpunit --configuration ./test/phpunit.xml'
             }
         }
         stage('Build Package') {
             steps {
-                sh 'make -C ./wumpus-copy/compile package'
+                sh 'make -C "./compile" package'
             }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'wumpus-copy/build/*.deb', fingerprint: true
-            junit 'wumpus-copy/test/logs/*.xml'
+            archiveArtifacts artifacts: 'build/*.deb', fingerprint: true
+            junit 'test/logs/*.xml'
         }
     }
 }
