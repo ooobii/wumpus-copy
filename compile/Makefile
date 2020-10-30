@@ -15,7 +15,7 @@ VER_REVIS=1
 PROJ_DIR=.
 
 PKG_NAME=wumpuscopy_$(VER_MAJOR).$(VER_MINOR)-$(VER_REVIS)
-PKG_BUILD_DIR=./../build
+PKG_BUILD_DIR=./build
 PKG_DIR=$(PKG_BUILD_DIR)/$(PKG_NAME)
 
 LIB_DIR=/usr/share/wumpus-copy
