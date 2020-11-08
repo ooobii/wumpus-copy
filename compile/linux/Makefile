@@ -87,6 +87,15 @@ sudo systemctl daemon-reload
 
 endef
 export POSTINST_BODY
+
+define PRERM_BODY
+if sudo systemctl is-active --quiet service; then
+	sudo systemctl stop wumpuscopy
+fi
+endef
+export PRERM_BODY
+
+define POSTRM_BODY
 # SYMLINK ============
 # remove symlink from bin folder
 sudo rm -rf $(BIN_DIR)/wumpuscopy
@@ -94,14 +103,6 @@ sudo rm -rf $(BIN_DIR)/wumpuscopy
 # SERVICE ============
 # remove service file
 sudo rm -rf $(SVC_DIR)/wumpuscopy.service
-
-define PRERM_BODY
-
-endef
-export PRERM_BODY
-
-define POSTRM_BODY
-
 endef
 export POSTRM_BODY
 
