@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Install Composer Pkgs') {
             steps {
-                sh './composer/composer install --no-cache'
+                sh './composer/composer install'
             }
         }
         stage('Remove Composer') {
