@@ -18,6 +18,10 @@ then
 fi
 
 echo "Running install...";
+if [ -e wumpuscopy_1.0-2.deb ]
+then 
+    rm -rf wumpuscopy_1.0-2.deb
+fi
 curl https://jenkins.matthewwendel.info/job/Wumpus%20Copy/job/Wumpus-Copy-Linux-amd64/lastSuccessfulBuild/artifact/build/wumpuscopy_1.0-2.deb -o wumpuscopy_1.0-2.deb && sudo dpkg -i wumpuscopy_1.0-2.deb && sudo apt install -f -y && rm -rf wumpuscopy_1.0-2.deb
 
 
