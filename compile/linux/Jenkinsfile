@@ -1,5 +1,4 @@
 /* groovylint-disable */
-
 pipeline {
     agent {label 'linux'}
     stages {
@@ -42,9 +41,14 @@ pipeline {
                 sh './vendor/phpunit/phpunit/phpunit --configuration ./test/phpunit.xml'
             }
         }
+        stage('Remove Composer Packages') {
+            steps {
+                sh 'rm -rf ./vendor'
+            }
+        }
         stage('Build Package') {
             steps {
-                sh 'make -C "./compile" package'
+                sh 'make -C "./compile/linux" package'
             }
         }
     }
