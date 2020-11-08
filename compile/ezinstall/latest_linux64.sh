@@ -10,7 +10,7 @@ then
 fi
 
 #test for php ppa, add if not available.
-if ! [ -e /etc/apt/sources.list.d/ondrefj-*-php-*.list ]
+if ! [ -e /etc/apt/sources.list.d/ondref-*-php-*.list ]
 then
     echo "Missing required repository! Asking if it's cool to add it...";
     echo "";
