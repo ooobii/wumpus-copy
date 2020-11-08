@@ -87,6 +87,13 @@ sudo systemctl daemon-reload
 
 endef
 export POSTINST_BODY
+# SYMLINK ============
+# remove symlink from bin folder
+sudo rm -rf $(BIN_DIR)/wumpuscopy
+
+# SERVICE ============
+# remove service file
+sudo rm -rf $(SVC_DIR)/wumpuscopy.service
 
 define PRERM_BODY
 
