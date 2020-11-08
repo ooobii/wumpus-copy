@@ -6,7 +6,11 @@ if [ -e /etc/wumpus-copy/config.json ]
 then
     echo "Dont worry, I'm backing up your config to your home directory while I install.";
     sudo cp /etc/wumpus-copy/config.json ~/wumpuscopy-backupconfigcopyfile
+    echo "";
+    echo "";
     sudo apt remove --purge wumpuscopy -y
+    echo "";
+    echo "";
 fi
 
 #test for php ppa, add if not available.
@@ -14,7 +18,9 @@ if ! [ -e /etc/apt/sources.list.d/ondref-*-php-*.list ]
 then
     echo "Missing required repository! Asking if it's cool to add it...";
     echo "";
+    echo "";
     sudo add-apt-repository ppa:ondrej/php;
+    echo "";
     echo "";
 fi
 
@@ -23,12 +29,11 @@ if [ -e wumpuscopy_1.0-2.deb ]
 then 
     rm -rf wumpuscopy_1.0-2.deb
 fi
-curl https://jenkins.matthewwendel.info/job/Wumpus%20Copy/job/Wumpus-Copy-Linux-amd64/lastSuccessfulBuild/artifact/build/wumpuscopy_1.0-2.deb -o wumpuscopy_1.0-2.deb  &> /dev/null
+curl https://jenkins.matthewwendel.info/job/Wumpus%20Copy/job/Wumpus-Copy-Linux-amd64/lastSuccessfulBuild/artifact/build/wumpuscopy_1.0-2.deb -o wumpuscopy_1.0-2.deb &> /dev/null
 
 
 echo "Installing package...";
-sudo dpkg -i wumpuscopy_1.0-2.deb \
-     && sudo apt install -f -y \
+sudo apt install -f ./wumpuscopy_1.0-2.deb
 echo "";
 echo "";
 echo "Done!";
