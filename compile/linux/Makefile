@@ -68,7 +68,6 @@ sudo ln -s $(LIB_DIR)/wumpus-copy.php $(BIN_DIR)/wumpuscopy
 sudo adduser --system --group wumpuscopy
 sudo adduser $(USER) wumpuscopy
 
-
 # write service file
 echo <<'EOSERVICE' | sudo tee $(SVC_DIR)/wumpuscopy.service
 [Unit]
