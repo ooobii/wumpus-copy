@@ -66,7 +66,6 @@ sudo ln -s $(LIB_DIR)/wumpus-copy.php $(BIN_DIR)/wumpuscopy
 # SERVICE ============
 # create service user
 sudo adduser --system --group wumpuscopy
-sudo adduser $$USER wumpuscopy
 
 # write service file
 echo <<'EOSERVICE' | sudo tee $(SVC_DIR)/wumpuscopy.service
@@ -95,6 +94,7 @@ endef
 export POSTINST_BODY
 
 define PRERM_BODY
+# stop service if running before uninstalling.
 if sudo systemctl is-active --quiet service; then
 	sudo systemctl stop wumpuscopy
 fi
@@ -111,10 +111,11 @@ sudo rm -rf $(BIN_DIR)/wumpuscopy
 sudo rm -rf $(SVC_DIR)/wumpuscopy.service
 # remove service user and group
 sudo deluser wumpuscopy
-sudo groupdel wumpuscopy
+sudo delgroup wumpuscopy
 
 endef
 export POSTRM_BODY
+
 
 
 create_struct:
