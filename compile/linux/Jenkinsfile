@@ -56,6 +56,19 @@ pipeline {
                 sh 'make -C "./compile/linux" package'
             }
         }
+        stage('Dummy Install') {
+            steps {
+                def fakeInstPath = "build/fakeinstall"
+                sh """
+                mkdir ${fakeInstPath}
+                mkdir ${fakeInstPath}/install
+                mkdir -p ${fakeInstPath}//dpkg/info
+                mkdir -p ${fakeInstPath}//dpkg/updates
+                touch ${fakeInstPath}//dpkg/status
+                PATH=/sbin:/usr/sbin:$PATH fakeroot dpkg --force-script-chrootless --log=`pwd`${fakeInstPath}/dpkg.log --root=`pwd`${fakeInstPath} --instdir `pwd`${fakeInstPath} --admindir=`pwd` ${fakeInstPath}/dpkg --install *.deb                
+                """
+            }
+        }
     }
 
     post {
