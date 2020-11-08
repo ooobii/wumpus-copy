@@ -9,6 +9,11 @@ pipeline {
         }
         stage('Fetch Composer & Repository') {
             parallel {
+                stage('Install Build Dependancies') {
+                    steps {
+                        sh 'sudo apt install -y curl dpkg binutils xz-utils pandoc php7.3 php7.3-cli php7.3-mbstring php7.3-json php7.3-xml'
+                    }
+                }
                 stage('Install Composer') {
                     steps {
                         sh '''

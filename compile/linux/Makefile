@@ -1,4 +1,4 @@
-#depends on pandoc curl dpkg php7.3 php7.3-cli php7.3-mbstring php7.3-json php7.3-xml 
+# building depends on the packages: curl dpkg binutils xz-utils pandoc php7.3 php7.3-cli php7.3-mbstring php7.3-json php7.3-xml
 SHELL = bash
 
 
