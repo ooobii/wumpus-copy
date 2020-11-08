@@ -109,6 +109,10 @@ sudo rm -rf $(BIN_DIR)/wumpuscopy
 # SERVICE ============
 # remove service file
 sudo rm -rf $(SVC_DIR)/wumpuscopy.service
+# remove service user and group
+sudo deluser wumpuscopy
+sudo groupdel wumpuscopy
+
 endef
 export POSTRM_BODY
 
