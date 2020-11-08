@@ -64,8 +64,13 @@ define POSTINST_BODY
 sudo ln -s $(LIB_DIR)/wumpus-copy.php $(BIN_DIR)/wumpuscopy
 
 # SERVICE ============
+# create service user
+sudo adduser --system --group wumpuscopy
+sudo adduser $(USER) wumpuscopy
+
+
 # write service file
-cat <<'EOSERVICE' | sudo tee $(SVC_DIR)/wumpuscopy.service
+echo <<'EOSERVICE' | sudo tee $(SVC_DIR)/wumpuscopy.service
 [Unit]
 Description=WumpusCopy Discord Bot
 After=network.target
@@ -75,7 +80,9 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=on-failure
 RestartSec=2
-User=~username~
+User=wumpuscopy
+Group=wumpuscopy
+UMask=007
 ExecStart=$(BIN_DIR)/wumpuscopy
 
 [Install]
