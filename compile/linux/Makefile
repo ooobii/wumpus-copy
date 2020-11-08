@@ -59,33 +59,31 @@ export CHANGELOG_BODY
 
 
 define POSTINST_BODY
-{
-	# SYMLINK ============
-	# create symlink in bin folder
-	sudo ln -s $(LIB_DIR)/wumpus-copy.php $(BIN_DIR)/wumpuscopy
+# SYMLINK ============
+# create symlink in bin folder
+sudo ln -s $(LIB_DIR)/wumpus-copy.php $(BIN_DIR)/wumpuscopy
 
-	# SERVICE ============
-	# write service file
-	cat <<'EOSERVICE' | sudo tee $(SVC_DIR)/wumpuscopy.service
-	[Unit]
-	Description=WumpusCopy Discord Bot
-	After=network.target
-	StartLimitIntervalSec=0
+# SERVICE ============
+# write service file
+cat <<'EOSERVICE' | sudo tee $(SVC_DIR)/wumpuscopy.service
+[Unit]
+Description=WumpusCopy Discord Bot
+After=network.target
+StartLimitIntervalSec=0
 
-	[Service]
-	Type=simple
-	Restart=on-failure
-	RestartSec=2
-	User=~username~
-	ExecStart=$(BIN_DIR)/wumpuscopy
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=2
+User=~username~
+ExecStart=$(BIN_DIR)/wumpuscopy
 
-	[Install]
-	WantedBy=multi-user.target
-	EOSERVICE
+[Install]
+WantedBy=multi-user.target
+EOSERVICE &> /dev/null
 
-	# reload daemon
-	sudo systemctl daemon-reload
-} &> /dev/null
+# reload daemon
+sudo systemctl daemon-reload
 
 endef
 export POSTINST_BODY
