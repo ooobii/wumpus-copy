@@ -14,7 +14,7 @@ install: package install_deb
 
 VER_MAJOR=1
 VER_MINOR=1
-VER_REVIS=1
+VER_REVIS=2
 
 PROJ_DIR=./../../
 PKG_NAME=wumpuscopy_$(VER_MAJOR).$(VER_MINOR)-$(VER_REVIS)_$(shell dpkg --print-architecture)
