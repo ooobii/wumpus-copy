@@ -100,29 +100,25 @@ $queueProcessLoop = function() use ($config, $depositDiscord) {
             #loop through them.
             foreach($destinations as $destination) {
 
-                #process message with destination
-                $result = $destination->send_message($config, $depositDiscord, $message);
-                if($result != 1) {
-                    $errors += 1;
-                } else {
+                try {
+
+                    #process message with destination
+                    $result = $destination->send_message($config, $depositDiscord, $message);
                     $sent += 1;
+                    
+                } catch(Throwable $ex) {
+
                 }
+
             }
 
         }
 
         #report how many queued items were processed, and report errors if any
-        if($errors == 0 && $sent > 0) {
+        if($sent > 0) {
+            
             #if no errors occurred
-            say("[Deposit]: All queue items processed successfully; sent '" . $sent . "' message(s).");
-
-        } elseif($errors > 0 && $sent > 0) {
-            #if errors and successes occurred
-            say("[Deposit]: All queue items processed successfully; sent '" . $sent . "' message(s).");
-
-        } elseif($errors > 0 && $sent == 0) {
-            #if no successes occurred
-            say("[Deposit]: ERROR! All {$errors} queue items failed to process.");
+            say("[Deposit]: Queue items processed successfully; sent '" . $sent . "' message(s).");
 
         }
     }
