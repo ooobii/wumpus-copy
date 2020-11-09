@@ -118,7 +118,7 @@ $queueProcessLoop = function() use ($config, $depositDiscord) {
 
         } elseif($errors > 0 && $sent > 0) {
             #if errors and successes occurred
-            say("[Deposit]: All queue items processed successfully; sent '" . $sent . "' message(s).");
+            say("[Deposit]: WARNING! '" . $sent . "' message(s) sent successfully, but '" . $errors . "' errors occured!");
 
         } elseif($errors > 0 && $sent == 0) {
             #if no successes occurred
