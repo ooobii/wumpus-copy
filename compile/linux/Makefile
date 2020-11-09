@@ -74,7 +74,7 @@ sudo ln -s $(LIB_DIR)/wumpus-copy.php $(BIN_DIR)/wumpuscopy
 sudo adduser --system --group wumpuscopy
 
 # write service file
-echo <<'EOSERVICE' | sudo tee $(SVC_DIR)/wumpuscopy.service
+cat <<'EOF' |  sudo tee $(SVC_DIR)/wumpuscopy.service >/dev/null
 [Unit]
 Description=WumpusCopy Discord Bot
 After=network.target
@@ -91,7 +91,7 @@ ExecStart=$(BIN_DIR)/wumpuscopy
 
 [Install]
 WantedBy=multi-user.target
-EOSERVICE &> /dev/null
+EOF
 
 # reload daemon
 sudo systemctl daemon-reload
@@ -116,7 +116,9 @@ sudo rm -rf $(BIN_DIR)/wumpuscopy
 # remove service file
 sudo rm -rf $(SVC_DIR)/wumpuscopy.service
 # remove service user and group
-sudo deluser wumpuscopy
+sudo deluser wumpuscopy || true
+sudo delgroup wumpuscopy || true
+sudo rm -rf /home/wumpuscopy || true
 
 endef
 export POSTRM_BODY
@@ -256,7 +258,10 @@ clean_deb_datastruct:
 
 
 install_deb:
-	sudo dpkg -i $(PKG_BUILD_DIR)/$(PKG_NAME).deb
+	sudo apt install -y $(PKG_BUILD_DIR)/$(PKG_NAME).deb
+
+uninstall:
+	sudo apt remove --purge --autoremove -y wumpuscopy
 
 
 clean:
