@@ -96,6 +96,7 @@ $queueProcessLoop = function() use ($config, $depositDiscord) {
 
             #find all applicable destinations for each message in queue.
             $destinations = $config->get_deposits_for_source_channel($message->channel_id);
+            $errorMessages = array();
 
             #loop through them.
             foreach($destinations as $destination) {
@@ -104,6 +105,8 @@ $queueProcessLoop = function() use ($config, $depositDiscord) {
                 $result = $destination->send_message($config, $depositDiscord, $message);
                 if($result != 1) {
                     $errors += 1;
+                    $errorMessages["error$errors"] = var_export($message, true);
+                    
                 } else {
                     $sent += 1;
                 }
