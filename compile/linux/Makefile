@@ -17,7 +17,7 @@ VER_MINOR=1
 VER_REVIS=1
 
 PROJ_DIR=./../../
-PKG_NAME=wumpuscopy_$(VER_MAJOR).$(VER_MINOR)-$(VER_REVIS)
+PKG_NAME=wumpuscopy_$(VER_MAJOR).$(VER_MINOR)-$(VER_REVIS)_$(shell dpkg --print-architecture)
 PKG_BUILD_DIR=./../../build
 PKG_DIR=$(PKG_BUILD_DIR)/$(PKG_NAME)
 
