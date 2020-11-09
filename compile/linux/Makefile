@@ -13,8 +13,8 @@ install: package install_deb
 
 
 VER_MAJOR=1
-VER_MINOR=0
-VER_REVIS=2
+VER_MINOR=1
+VER_REVIS=1
 
 PROJ_DIR=./../../
 PKG_NAME=wumpuscopy_$(VER_MAJOR).$(VER_MINOR)-$(VER_REVIS)
@@ -45,7 +45,13 @@ export CONTROL_BODY
 define CHANGELOG_BODY
 wumpus-copy ($(VER_MAJOR).$(VER_MINOR)-$(VER_REVIS)) stretch; urgency=medium
 
- * Added a service
+ * Provide better error handling for processing the message deposit queue.
+
+ -- Matthew Wendel <matthewwendel77@gmail.com>  Sat, 08 Nov 2020 13:59:26 +0000
+
+wumpus-copy (1.0-2)  stretch; urgency=medium
+
+ * Added a service provider for systemd
 
  -- Matthew Wendel <matthewwendel77@gmail.com>  Sat, 08 Nov 2020 13:59:26 +0000
 
