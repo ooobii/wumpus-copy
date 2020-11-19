@@ -14,7 +14,7 @@ install: package install_deb
 
 VER_MAJOR=1
 VER_MINOR=1
-VER_REVIS=2
+VER_REVIS=3
 
 PROJ_DIR=./../../
 PKG_NAME=wumpuscopy_$(VER_MAJOR).$(VER_MINOR)-$(VER_REVIS)_$(shell dpkg --print-architecture)
@@ -43,7 +43,13 @@ export CONTROL_BODY
 
 
 define CHANGELOG_BODY
-wumpus-copy ($(VER_MAJOR).$(VER_MINOR)-$(VER_REVIS)) stretch; urgency=medium
+wumpus-copy ($(VER_MAJOR).$(VER_MINOR)-$(VER_REVIS)) stretch; urgency=low
+
+ * Update service auto-restart rules to attempt 5 times every 10 seconds.
+
+ -- Matthew Wendel <matthewwendel77@gmail.com>  Thu, 19 Nov 2020 14:46:00 +0000
+
+wumpus-copy (1.1-2)  stretch; urgency=medium
 
  * Provide better error handling for processing the message deposit queue.
 
@@ -78,12 +84,13 @@ cat <<'EOF' |  sudo tee $(SVC_DIR)/wumpuscopy.service >/dev/null
 [Unit]
 Description=WumpusCopy Discord Bot
 After=network.target
-StartLimitIntervalSec=0
+StartLimitInterval=200
+StartLimitBurst=5
 
 [Service]
 Type=simple
 Restart=on-failure
-RestartSec=2
+RestartSec=10
 User=wumpuscopy
 Group=wumpuscopy
 UMask=007
