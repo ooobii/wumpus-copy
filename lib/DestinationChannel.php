@@ -44,8 +44,11 @@ class DestinationChannel extends ChannelConnection
                 # generate the message content
                 $content = $message->author->username . ": ". $message->content;
 
-                #if channel is found, send the message to the channel for this deposit connection.
-                $channel->sendMessage($content)->then(function ($message) {
+                # generate the outgoing message embed (if message had one)
+                $embed = $message->embeds->count() > 0 ? $message->embeds->first() : null;
+
+                #send the message to the channel for this deposit connection.
+                $channel->sendMessage($content, false, $embed)->then(function ($message) {
                     return 1;
                 })->otherwise(function ($e) {
                     return 0;
