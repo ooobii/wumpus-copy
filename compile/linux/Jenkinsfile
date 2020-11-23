@@ -51,10 +51,16 @@ pipeline {
                 sh 'rm -rf ./vendor'
             }
         }
+        stage('Build Package') {
+            steps {
+                sh 'make -C "./compile/linux" package'
+            }
+        }
     }
 
     post {
         always {
+            archiveArtifacts artifacts: 'build/*.deb', fingerprint: true
             junit 'test/logs/*.xml'
         }
     }
