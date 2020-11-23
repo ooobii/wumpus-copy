@@ -7,7 +7,7 @@ assignees: ooobii
 
 ---
 
-<mark>**WARNING: DO NOT POST YOUR DISCORD TOKENS TO ANY PUBLIC FORUM! I'm happy to help validate your configuration files, but DO NOT SHARE YOUR TOKENS WITH ANYONE.**</mark>
+<ins>**WARNING: DO NOT POST YOUR DISCORD TOKENS TO ANY PUBLIC FORUM! BE CAREFUL WHAT YOU POST (:**</ins>
 
 **Well... I'm sorry I messed up! Tell me a bit about what happened.**
 [...]
