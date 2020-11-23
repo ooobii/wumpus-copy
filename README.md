@@ -1,10 +1,15 @@
 # WumpusCopy
+[![Build Status](https://jenkins.matthewwendel.info/job/WumpusCopy/job/Wumpus-Copy-Linux-amd64/badge/icon?subject=Build:%20Linux-amd64%20(Debian))](https://jenkins.matthewwendel.info/job/WumpusCopy/job/Wumpus-Copy-Linux-amd64/)
+<br>
 
 A PHP-Based Discord bot that utilizes an individual user's token to monitor for messages that should be copied to another server that the connected bot belongs to. 
 
-<ins>**WARNING!:** Using a personal Discord token on any client besides the official Discord client can cause a TOS strike against your account! Please use this tool with extreme caution!_</ins>
+<ins>**WARNING!:** Using a personal Discord token on any client besides the official Discord client can cause a TOS strike against your account! Please use this tool with extreme caution!</ins>
 
 ## Summary
+
+This script is primarily service based and controlled by systemd / Windows Service manager. The service unit name is **'wumpuscopy.service`** (on Windows: **'wumpuscopy.exe'**). You can run wumpuscopy as a service or directly in the currently active console session.
+
 This script launches 2 separate Discord clients; one to connect to an individual's account, and another to connect to a bot account.
 Properties for this script are located in the configuration JSON; this file is located in the following order of precedence (first encountered is used):
 
@@ -17,20 +22,17 @@ As messages are received by the individual token, the script will check the auth
 If the message has a specified destination, the message is added to the processing queue.
 
 For each iteration of queue processing (frequency defined in configuration), messages are deposited into the destination connection(s) they qualify for.
-<br><br>
-
+<br>
 
 ## Usage
 wumpuscopy [**config_file_path**]
 
-### ARGUMENTS
+### Arguments
 [**config_file_path**]: *(Optional)* The path pointing to the configuration.
-<br><br>
-
-
+<br>
 
 ## Configuration
-The configuration file is a JSON document that provides tokens and relationships for how you'd like the script to behave.
+The configuration file is a JSON document that provides tokens and relationships for how you'd like the script to behave. By default, the configuration is located at '/etc/wumpus-copy/config.json', but a command line argument can be provided upon startup to load settings from elsewhere.
 
 ### Properties
 This property dictionary contains values required for the Discord instances to function.

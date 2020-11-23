@@ -1,9 +1,12 @@
 # NAME
 WumpusCopy
 
-A PHP-Based Discord bot that utilizes an individual user's token to monitor for messages that should be copied to another server that the connected bot belongs to. 
+A PHP-Based Discord bot that utilizes an individual user's token to monitor for messages that should be copied to another server that the connected bot belongs to.
 
 # DESCRIPTION
+
+This script is primarily service based and controlled by systemd. The service unit name is **'wumpuscopy.service`**. You can run wumpuscopy as a service or directly in the TTY.
+
 This script launches 2 separate Discord clients; one to connect to an individual's account, and another to connect to a bot account.
 Properties for this script are located in the configuration JSON; this file is located in the following order of precedence (first encountered is used):
 
@@ -25,7 +28,7 @@ wumpuscopy [**config_file_path**]
 :   *(Optional)* The path pointing to the configuration.
 
 # CONFIGURATION
-The configuration file is a JSON document that provides tokens and relationships for how you'd like the script to behave.
+The configuration file is a JSON document that provides tokens and relationships for how you'd like the script to behave. By default, the configuration is located at '/etc/wumpus-copy/config.json', but a command line argument can be provided upon startup to load settings from elsewhere.
 
 ## PROPERTIES
 This property dictionary contains values required for the Discord instances to function.
