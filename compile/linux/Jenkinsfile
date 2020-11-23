@@ -2,9 +2,14 @@
 pipeline {
     agent {label 'linux'}
     stages {
-        stage('Clean Workspace') {
+        stage('Clone Repository') {
             steps {
-                cleanWs()
+                checkout([$class: 'GitSCM',
+                    branches: [[name: "${GIT_BRANCH}"]],
+                    extensions: [[$class: 'WipeWorkspace']],
+                    userRemoteConfigs: [[url: 'git@github.com:ooobii/wumpus-copy.git']]
+                ])
+                // sh "git clone --branch $BRANCH_NAME git@github.com:ooobii/wumpus-copy.git ."
             }
         }
         stage('Fetch Composer & Repository') {
@@ -22,16 +27,6 @@ pipeline {
                         php composer-setup.php --install-dir=./composer --filename=composer
                         rm -rf composer-setup.php
                         '''
-                    }
-                }
-                stage('TestBranch') {
-                    steps {
-                        sh "printenv"
-                    }
-                }
-                stage('Clone Repository') {
-                    steps {
-                        sh "git clone --branch $BRANCH_NAME git@github.com:ooobii/wumpus-copy.git ."
                     }
                 }
             }
