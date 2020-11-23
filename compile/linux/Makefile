@@ -45,6 +45,13 @@ export CONTROL_BODY
 define CHANGELOG_BODY
 wumpus-copy ($(VER_MAJOR).$(VER_MINOR)-$(VER_REVIS)) stretch; urgency=low
 
+ * Added the ability for the bot to copy 'embed' objects included with
+   incoming messages.
+
+ -- Matthew Wendel <matthewwendel77@gmail.com>  Thu, 22 Nov 2020 19:39:00 +0000
+
+wumpus-copy (1.1-3)  stretch; urgency=medium
+
  * Update service auto-restart rules to attempt 5 times every 10 seconds.
 
  -- Matthew Wendel <matthewwendel77@gmail.com>  Thu, 19 Nov 2020 14:46:00 +0000
