@@ -24,11 +24,6 @@ pipeline {
                         '''
                     }
                 }
-                stage('Clone Repository') {
-                    steps {
-                        sh 'git clone git@github.com:ooobii/wumpus-copy.git .'
-                    }
-                }
             }
         }
         stage('Install Composer Pkgs') {
