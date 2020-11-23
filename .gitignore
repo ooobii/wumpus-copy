@@ -1,6 +1,9 @@
 /vendor
 /config.json
-/.vscode
+
+/.vscode/*
+!/.vscode/tasks.json
+
 /phpunit
 /build
 /test/logs
