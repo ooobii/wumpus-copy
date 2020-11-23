@@ -1,5 +1,5 @@
 # WumpusCopy
-[![Build Status](https://jenkins.matthewwendel.info/job/WumpusCopy/job/linux-amd64/badge/icon?subject=Build:%20Linux-amd64%20(Debian))](https://jenkins.matthewwendel.info/job/WumpusCopy/job/Wumpus-Copy-Linux-amd64/)
+[![Build Status](https://jenkins.matthewwendel.info/job/WumpusCopy/job/linux-amd64/badge/icon?subject=Build:%20Linux-amd64%20(Debian))](https://jenkins.matthewwendel.info/job/WumpusCopy/job/linux-amd64/)
 <br>
 
 A PHP-Based Discord bot that utilizes an individual user's token to monitor for messages that should be copied to another server that the connected bot belongs to. 
