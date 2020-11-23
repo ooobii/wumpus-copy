@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-export WC_PKGNAME="wumpuscopy_1.1-3_amd64.deb"
+export WC_PKGNAME="wumpuscopy_1.2-5_amd64.deb"
 
 # if config exists, backup to home directory real quick like
 if [ -e /etc/wumpus-copy/config.json ] 
@@ -31,7 +31,7 @@ if [ -e $WC_PKGNAME ]
 then 
     rm -rf $WC_PKGNAME
 fi
-curl https://jenkins.matthewwendel.info/job/WumpusCopy/job/Wumpus-Copy-Linux-amd64/lastSuccessfulBuild/artifact/build/$WC_PKGNAME -o $WC_PKGNAME &> /dev/null
+curl https://jenkins.matthewwendel.info/job/WumpusCopy/job/linux-amd64/lastSuccessfulBuild/artifact/build/$WC_PKGNAME -o $WC_PKGNAME &> /dev/null
 
 
 echo "Installing package...";
