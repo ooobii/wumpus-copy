@@ -25,7 +25,7 @@ pipeline {
                     }
                 }
                 stage('TestBranch') {
-                    echo "$BRANCH_NAME"
+                    sh 'echo "$BRANCH_NAME"'
                 }
                 stage('Clone Repository') {
                     steps {
