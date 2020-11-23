@@ -12,23 +12,19 @@ pipeline {
                 // sh "git clone --branch $BRANCH_NAME git@github.com:ooobii/wumpus-copy.git ."
             }
         }
-        stage('Fetch Composer & Repository') {
-            parallel {
-                stage('Install Build Dependancies') {
-                    steps {
-                        sh 'sudo apt install -y curl dpkg binutils xz-utils pandoc php7.3 php7.3-cli php7.3-mbstring php7.3-json php7.3-xml'
-                    }
-                }
-                stage('Install Composer') {
-                    steps {
-                        sh '''
-                        curl -sS https://getcomposer.org/installer -o composer-setup.php
-                        mkdir composer
-                        php composer-setup.php --install-dir=./composer --filename=composer
-                        rm -rf composer-setup.php
-                        '''
-                    }
-                }
+        stage('Install Build Dependancies') {
+            steps {
+                sh 'sudo apt install -y curl dpkg binutils xz-utils pandoc php7.3 php7.3-cli php7.3-mbstring php7.3-json php7.3-xml'
+            }
+        }
+        stage('Install Composer') {
+            steps {
+                sh '''
+                curl -sS https://getcomposer.org/installer -o composer-setup.php
+                mkdir composer
+                php composer-setup.php --install-dir=./composer --filename=composer
+                rm -rf composer-setup.php
+                '''
             }
         }
         stage('Install Composer Pkgs') {
