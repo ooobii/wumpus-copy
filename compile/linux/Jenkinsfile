@@ -68,15 +68,12 @@ pipeline {
     }
 
     post {
-        post {
-            success {
-                setBuildStatus('Build Successful', 'SUCCESS')
-            }
-            failure {
-                setBuildStatus('Failure', 'FAILURE')
-            }
+        success {
+            setBuildStatus('Build Successful', 'SUCCESS')
         }
-
+        failure {
+            setBuildStatus('Failure', 'FAILURE')
+        }
         always {
             archiveArtifacts artifacts: 'build/*.deb', fingerprint: true
             junit 'test/logs/*.xml'
