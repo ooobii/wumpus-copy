@@ -57,9 +57,8 @@ pipeline {
                         sh './vendor/phpunit/phpunit/phpunit --configuration ./test/phpunit.xml'
                     }
                     catch (exc) {
-                        echo 'WARNING: Tests Failed! Attempting to continue with package build'
+                        echo 'WARNING: Tests Failed! Attempting to continue with package build...'
                         currentBuild.result = 'UNSTABLE'
-                        setBuildStatus('Unstable', 'UNSTABLE')
                     }
                 }
             }
