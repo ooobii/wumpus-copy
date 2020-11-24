@@ -6,9 +6,9 @@ require __DIR__ . '/../../lib/requires.php';
 class ConfigurationManagerTests extends TestCase
 {
     public function testInvalid_Parsing_1() {
+        $this->assertFalse(true);
         $this->expectException(Exception::class);
         $testConfig = new config_manager(__DIR__ . "/json/testConfig_invalid_badjson1.json");
-
     }
     public function testInvalid_Parsing_2() {
         $this->expectException(Exception::class);
