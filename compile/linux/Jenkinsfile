@@ -52,7 +52,15 @@ pipeline {
         }
         stage('Execute Tests') {
             steps {
-                sh './vendor/phpunit/phpunit/phpunit --configuration ./test/phpunit.xml'
+                script {
+                    try {
+                        sh './vendor/phpunit/phpunit/phpunit --configuration ./test/phpunit.xml'
+                    }
+                    catch (exc) {
+                        echo 'WARNING: Tests Failed! Attempting to continue with package build'
+                        currentBuild.result = 'UNSTABLE'
+                    }
+                }
             }
         }
         stage('Remove Composer Packages') {
@@ -73,6 +81,9 @@ pipeline {
         }
         failure {
             setBuildStatus('Failure', 'FAILURE')
+        }
+        unstable {
+            setBuildStatus('Unstable', 'UNSTABLE')
         }
         always {
             archiveArtifacts artifacts: 'build/*.deb', fingerprint: true
