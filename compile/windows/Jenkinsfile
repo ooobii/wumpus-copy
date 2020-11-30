@@ -37,7 +37,7 @@ pipeline {
         }
         stage('Install Composer Packages') {
             steps{
-                powershell 'php .\\composer\\composer.php install --no-cache'
+                powershell 'php .\\composer\\composer.php install'
             }
         }
         stage('Remove Composer') {
@@ -71,9 +71,9 @@ pipeline {
         unstable {
             setBuildStatus('Unstable', 'UNSTABLE')
         }
-        // always {
+         always {
         //     //archiveArtifacts artifacts: 'build/*.exe', fingerprint: true
-        //     junit 'test/logs/*.xml'
-        // }
+             junit 'test/logs/*.xml'
+         }
     }
 }
