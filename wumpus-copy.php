@@ -8,18 +8,18 @@ ini_set('memory_limit', '-1');
 use Discord\Discord;
 use Discord\Parts\Channel\Message;
 
-include __DIR__ . '/vendor/autoload.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 #load classes
-require __DIR__ . '/lib/requires.php';
+require __DIR__ . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'requires.php';
 
 // START =================================
 #load config from JSON; use installed config if no argument provided.
 if(sizeof($argv) != 2) {
     if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-        $configLoc = '%APPDATA%/wumpus-copy/config.json';
+        $configLoc = '%APPDATA%' . DIRECTORY_SEPARATOR . 'wumpus-copy' . DIRECTORY_SEPARATOR . 'config.json';
     } else {
-        $configLoc = '/etc/wumpus-copy/config.json';
+        $configLoc = DIRECTORY_SEPARATOR . 'etc' . DIRECTORY_SEPARATOR . 'wumpus-copy' . DIRECTORY_SEPARATOR . 'config.json';
     }
 } else {
     $configLoc = $argv[1];
