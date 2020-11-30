@@ -1,0 +1,59 @@
+/* groovylint-disable */
+
+
+void setBuildStatus(String message, String state) {
+    step([
+        $class: 'GitHubCommitStatusSetter',
+        reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/ooobii/wumpus-copy'],
+        contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'jenkinsci/build-win'],
+        errorHandlers: [[$class: 'ChangingBuildStatusErrorHandler', result: 'UNSTABLE']],
+        statusResultSource: [ $class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', message: message, state: state]] ]
+    ])
+}
+
+
+pipeline {
+    agent { label 'windows' }
+    stages {
+        stage('Clone Repository') {
+            steps {
+                checkout([$class: 'GitSCM',
+                    branches: [[name: "${GIT_BRANCH}"]],
+                    extensions: [[$class: 'WipeWorkspace']],
+                    userRemoteConfigs: [[url: 'git@github.com:ooobii/wumpus-copy.git']]
+                ])
+            // sh "git clone --branch $BRANCH_NAME git@github.com:ooobii/wumpus-copy.git ."
+            }
+        }
+        stage('Test Echo') {
+            steps {
+                echo(message: "Hello World")
+            }
+        }
+        stage('Test PowerShell Command') {
+            steps {
+                powershell(script: '''
+                    echo Hello World!
+                    Get-VM
+                    dir
+                ''')
+            }
+        }
+    }
+
+    post {
+        success {
+            setBuildStatus('Build Successful', 'SUCCESS')
+        }
+        failure {
+            setBuildStatus('Failure', 'FAILURE')
+        }
+        unstable {
+            setBuildStatus('Unstable', 'UNSTABLE')
+        }
+        always {
+            archiveArtifacts artifacts: 'build/*.deb', fingerprint: true
+            junit 'test/logs/*.xml'
+        }
+    }
+}
