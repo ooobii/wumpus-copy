@@ -35,7 +35,11 @@ pipeline {
                 ''')
             }
         }
-        stage('Test: Workspace Manifest') {
+        stage('Install Composer Packages') {
+            steps{
+                powershell 'php .\\composer\\composer.php install --no-cache'
+            }
+        }
             steps {
                 powershell(script: '''
                     tree
