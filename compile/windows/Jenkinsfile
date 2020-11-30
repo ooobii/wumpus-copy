@@ -25,10 +25,13 @@ pipeline {
             // sh "git clone --branch $BRANCH_NAME git@github.com:ooobii/wumpus-copy.git ."
             }
         }
-        stage('Install Composer Packages') {
+        stage('Install Composer') {
             steps {
                 powershell('''
-                composer install --no-cache
+                Invoke-WebRequest -Uri "https://getcomposer.org/installer" -OutFile ".\\composer-setup.php"
+                mkdir composer
+                php composer-setup.php --install-dir=.\\composer --filename=composer.php
+                Remove-Item .\\composer-setup.php
                 ''')
             }
         }
