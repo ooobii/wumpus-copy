@@ -54,9 +54,9 @@ pipeline {
         unstable {
             setBuildStatus('Unstable', 'UNSTABLE')
         }
-        always {
-            //archiveArtifacts artifacts: 'build/*.exe', fingerprint: true
-            junit 'test/logs/*.xml'
-        }
+        // always {
+        //     //archiveArtifacts artifacts: 'build/*.exe', fingerprint: true
+        //     junit 'test/logs/*.xml'
+        // }
     }
 }
